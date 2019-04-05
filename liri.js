@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
 const inquirer = require("inquirer");
@@ -9,36 +9,16 @@ const Spotify = require("node-spotify-api");
 
 // Created a series of questions
 inquirer
-  .prompt([
-    {
+  .prompt([{
       type: "list",
       name: "reqType",
       message: "Choose an option ",
       choices: [
-        "Search Band or Artist",
+        "Search Concert",
         "Search Song",
         "Search Movie",
         "Do what It says"
-      ],
-      filter: function(val) {
-        var choice = val.toLowerCase();
-        var option = 0;
-        switch (choice) {
-          case "search band or artist":
-            option = 1;
-            break;
-          case "search song":
-            option = 2;
-            break;
-          case "search movie":
-            option = 3;
-            break;
-          case "do what it says":
-            option = 4;
-            break;
-        }
-        return option;
-      }
+      ]
     },
 
     {
@@ -53,7 +33,7 @@ inquirer
       message: "Are you sure (Y/N) ? "
     }
   ])
-  .then(function(data) {
+  .then(function (data) {
     if (data.confirm) {
       processRequest(data.reqType, data.reqData);
     }
@@ -61,17 +41,21 @@ inquirer
 
 function processRequest(reqType, reqData) {
   console.log("reqType ", reqType);
-  switch (reqType) {
-    case 1:
+  var choice = reqType.toLowerCase();
+  switch (choice) {
+    case "search concert":
       bands(reqData);
       break;
-    case 2:
+    case "search song":
       songs(reqData);
       break;
-    case 3:
+    case "spotify this song":
+      songs(reqData);
+      break;
+    case "search movie":
       movies(reqData);
       break;
-    case 4:
+    case "do what it says":
       doWhatItSays(reqData);
       break;
   }
@@ -81,10 +65,10 @@ function bands(band) {
   axios
     .get(
       "https://rest.bandsintown.com/artists/" +
-        band +
-        "/events?app_id=codingbootcamp"
+      band +
+      "/events?app_id=codingbootcamp"
     )
-    .then(function(response) {
+    .then(function (response) {
       var data = response.data[0];
       //console.log(data);
       console.log(chalk.green("Name of the venue : " + data.venue.name));
@@ -92,7 +76,7 @@ function bands(band) {
       var date = data.datetime.slice(0, 10);
       console.log(chalk.green("Date of the Event : " + date));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log("omdbapi error ", err);
     });
 }
@@ -100,7 +84,7 @@ function bands(band) {
 function movies(movie) {
   axios
     .get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy")
-    .then(function(response) {
+    .then(function (response) {
       var data = response.data;
       console.log("Title of the movie : ", chalk.magenta(data.Title));
       console.log("Year the movie came out : ", chalk.magenta(data.Year));
@@ -117,7 +101,7 @@ function movies(movie) {
       console.log("Plot of the movie : ", chalk.magenta(data.Plot));
       console.log("Actors in the movie : ", chalk.magenta(data.Actors));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log("omdbapi error ", err);
     });
 }
@@ -134,10 +118,9 @@ function songs(song) {
       query: song,
       limit: 5,
       market: "US",
-      offset: 0,
-      limit: 10
+      offset: 0
     })
-    .then(function(response) {
+    .then(function (response) {
       console.log(
         chalk.yellow("Artist name", response.tracks.items[0].artists[0].name)
       );
@@ -152,11 +135,24 @@ function songs(song) {
         chalk.yellow("Album Name", response.tracks.items[0].album.name)
       );
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(chalk.red("spotify error ", err));
     });
 }
 
 function doWhatItSays() {
-  console.log("DO WHAT IT SAYS.. ");
+  fs.readFile("random.txt", "utf8", function (error, data) {
+
+    if (error) {
+      return console.log("Error reading random.txt file ", error);
+    }
+    var dataArr = data.split(",");
+    var reqType = dataArr[0];
+    var reqData = dataArr[1];
+    console.log(reqType);
+    reqType = reqType.replace(/-/g, ' ');
+    console.log(reqType);
+    reqData = reqData.replace(/-/g, ' ');
+    processRequest(reqType, reqData);
+  });
 }
