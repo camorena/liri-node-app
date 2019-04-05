@@ -42,3 +42,29 @@ Do what It says
 ? Are you sure (Y/N) ?
 
 ### Enter the confirmation.
+
+## Results
+
+### Concerts
+
+Name of the venue : P!NK: BEAUTIFUL TRAUMA WORLD TOUR
+Venue location : Canada
+Date of the Event : 2019-04-05
+
+## Songs
+
+Artist name Luis Fonsi
+Song Name Despacito - Remix
+Song Preview URL : https://open.spotify.com/track/6rPO02ozF3bM7NnOV4h6s2
+Album Name Despacito Feat. Justin Bieber (Remix)
+
+## Movies
+
+Title of the movie : Ghost
+Year the movie came out : 1990
+IMDB Rating of the movie : 7.0
+Rotten Tomatoes Rating of the movie :
+Country where the movie was produced : USA
+Language of the movie : English
+Plot of the movie : After a young man is murdered, his spirit stays behind to warn his lover of impending danger, with the help of a reluctant psychic.
+Actors in the movie : Patrick Swayze, Demi Moore, Tony Goldwyn, Stanley Lawrence
