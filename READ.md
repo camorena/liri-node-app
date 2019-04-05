@@ -22,7 +22,7 @@ node liri.js <enter>
 
 ## Actions
 
-#A menu will be displayed as shown.
+### A menu will be displayed as shown.
 
 ? Choose an option (Use arrow keys)
 ❯ Search Concert
@@ -30,15 +30,15 @@ Search Song
 Search Movie
 Do what It says
 
-#After the option have been select;
+### After the option have been select;
 
 ? Choose an option Search Song
 ? What would you like to search...
 
-# Enter the name of concert, song or movie to search.
+### Enter the name of concert, song or movie to search.
 
 ? Choose an option Search Song
 ? What would you like to search... ddd
 ? Are you sure (Y/N) ? (Y/n)
 
-# Enter the confirmation.
+### Enter the confirmation.
